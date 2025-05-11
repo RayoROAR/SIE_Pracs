@@ -10,6 +10,7 @@ public class P4_MaterialHandler : MonoBehaviour
 
     public Material FullscreenMaterial;
     public Material QuantizationMaterialObject;
+    public Material QuantizationMaterialObjectPlants;
 
     public Slider LevelsSlider;
 
@@ -113,6 +114,7 @@ public class P4_MaterialHandler : MonoBehaviour
             else //(curr_space == 1) // Object Space
             {
                 QuantizationMaterialObject.SetFloat("_" + reference.name, value);
+                QuantizationMaterialObjectPlants.SetFloat("_" + reference.name, value);
             }
         }
         else
@@ -139,6 +141,7 @@ public class P4_MaterialHandler : MonoBehaviour
             // Enable Image Space shader, disable the Object Space one
             if (shaderEnabled) FullscreenMaterial.SetInt("_Enabled", 1);
             QuantizationMaterialObject.SetInt("_Enabled", 0);
+            QuantizationMaterialObjectPlants.SetInt("_Enabled", 0);
 
             // Set Image Space levels to the previous value
             float levels = QuantizationMaterialObject.GetFloat("_QuantizationLevels");
@@ -146,6 +149,7 @@ public class P4_MaterialHandler : MonoBehaviour
 
             // Reset Object Space levels to 0
             QuantizationMaterialObject.SetFloat("_QuantizationLevels", 0f);
+            QuantizationMaterialObjectPlants.SetFloat("_QuantizationLevels", 0f);
 
             if (curr_colorspace == 0) // RGB
             {
@@ -162,11 +166,13 @@ public class P4_MaterialHandler : MonoBehaviour
         {
             // Enable Object Space shader, disable the Image Space one
             if (shaderEnabled) QuantizationMaterialObject.SetInt("_Enabled", 1);
+            if (shaderEnabled) QuantizationMaterialObjectPlants.SetInt("_Enabled", 1);
             FullscreenMaterial.SetInt("_Enabled", 0);
 
             // Set Object Space levels to the previous value
             float levels = FullscreenMaterial.GetFloat("_QuantizationLevels");
             QuantizationMaterialObject.SetFloat("_QuantizationLevels", levels);
+            QuantizationMaterialObjectPlants.SetFloat("_QuantizationLevels", levels);
 
             // Reset Image Space levels to 0
             FullscreenMaterial.SetFloat("_QuantizationLevels", 0f);
@@ -175,11 +181,15 @@ public class P4_MaterialHandler : MonoBehaviour
             {
                 QuantizationMaterialObject.DisableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
                 QuantizationMaterialObject.EnableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
+                QuantizationMaterialObjectPlants.DisableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
+                QuantizationMaterialObjectPlants.EnableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
             }
             else //(curr_colorspace == 1) // HSV
             {
                 QuantizationMaterialObject.DisableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
                 QuantizationMaterialObject.EnableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
+                QuantizationMaterialObjectPlants.DisableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
+                QuantizationMaterialObjectPlants.EnableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
             }
         }
     }
@@ -199,6 +209,8 @@ public class P4_MaterialHandler : MonoBehaviour
             {
                 QuantizationMaterialObject.DisableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
                 QuantizationMaterialObject.EnableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
+                QuantizationMaterialObjectPlants.DisableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
+                QuantizationMaterialObjectPlants.EnableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
             }
 
             usingColorsToggle.SetActive(false); // hide
@@ -218,6 +230,8 @@ public class P4_MaterialHandler : MonoBehaviour
             {
                 QuantizationMaterialObject.DisableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
                 QuantizationMaterialObject.EnableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
+                QuantizationMaterialObjectPlants.DisableKeyword("_QUANTIZATIONCOLORSPACE_RGB");
+                QuantizationMaterialObjectPlants.EnableKeyword("_QUANTIZATIONCOLORSPACE_HSV");
             }
 
             usingColorsToggle.SetActive(true); // show
@@ -240,6 +254,7 @@ public class P4_MaterialHandler : MonoBehaviour
         else //(curr_space == 1) // Object Space
         {
             QuantizationMaterialObject.SetInt("_Enabled", enabledInt);
+            QuantizationMaterialObjectPlants.SetInt("_Enabled", enabledInt);
         }
     }
 
@@ -249,17 +264,20 @@ public class P4_MaterialHandler : MonoBehaviour
 
         FullscreenMaterial.SetInt("_QuantizationUsingColor", usingColorInt);
         QuantizationMaterialObject.SetInt("_QuantizationUsingColor", usingColorInt);
+        QuantizationMaterialObjectPlants.SetInt("_QuantizationUsingColor", usingColorInt);
     }
 
     public void UpdateColor1(Color col)
     {
         FullscreenMaterial.SetColor("_QuantizationColor1", col);
         QuantizationMaterialObject.SetColor("_QuantizationColor1", col);
+        QuantizationMaterialObjectPlants.SetColor("_QuantizationColor1", col);
     }
 
     public void UpdateColor2(Color col)
     {
         FullscreenMaterial.SetColor("_QuantizationColor2", col);
         QuantizationMaterialObject.SetColor("_QuantizationColor2", col);
+        QuantizationMaterialObjectPlants.SetColor("_QuantizationColor2", col);
     }
 }
